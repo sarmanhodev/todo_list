@@ -1,183 +1,184 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>To Do List</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!--BOOTSTRAP ICONS-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <!--JQUERY-->
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lista de Compras</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!--JQUERY CDN-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-  <h1 class="text-center">To Do List</h1>
-  <br>
-  <div class="container-sm">
-    <div class="back " id="formulario">
-      <div class="row">
-        <div class="col-10">
-          <div class="input-group mb-3">
-            <span class="input-group-text"><strong>Item</strong></span>
-            <input type="text" style="text-transform: uppercase;" id="item" aria-label="Item" class="form-control">
-          </div>
+    <div class="container-fluid">
+
+        <div class="row text-center">
+            <h2>Lista de Compras</h2>
         </div>
-        <div class="col-auto">
-          <button class="btn btn-success" onclick="main()" type="button"
-            id="btn_adiciona"><strong>Adicionar</strong></button>
-        </div>
-      </div>
-    </div>
-    <br>
-    <!--CONTADOR DE QUANTIDADE DE ITENS-->
-    <div class="row" id="quantidade_total">
-      <!--EXIBIRÁ A QUANTIDADE TOTAL DE ITENS-->
-    </div>
 
-    <!--RECEBE OS INPUTS-->
-    <div class="container" id="linhas">
-      <!--RECEBE OS INPUTS COM OS DADOS-->
-
-    </div>
-  </div>
-
-  <style>
-    .fundo {
-      padding: 10px 10px;
-      background: rgba(171, 171, 166, 0.4);
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-      backdrop-filter: blur(5.5px);
-      -webkit-backdrop-filter: blur(5.5px);
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-    .container {
-      padding: 20px;
-      width: 300px;
-      margin: 0 auto;
-      margin-top: 40px;
-      border-radius: 5px;
-    }
-
-    .back {
-      padding: 30px 30px;
-      background: rgba(171, 171, 166, 0.4);
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-      backdrop-filter: blur(5.5px);
-      -webkit-backdrop-filter: blur(5.5px);
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-    .strike {
-      text-decoration: line-through;
-    }
-  </style>
-
-  <script>
-    var contador = 0;
-    // CRIA LINHA
-    const item_lista = document.getElementById("item");
-    function criaLinha(counter) {
-
-      linha = document.createElement("div");
-      item = document.createElement("a");
-
-
-      item.innerHTML = `
-        <div class='bordas fundo divPai alert alert-dismissible fade show' id='dados_${counter}' role='alert'>    
-          <div class='divFilha'>
-            <div class='row'>
-              <div id='item_inform' class='col-8'>
-                <h6 name='item_${counter}' class="form-check-label"  for="check_item" id='item_${counter}' style="text-transform: uppercase;"><strong>${item_lista.value}</strong></h6>
-              </div>
-              <div class='col-auto'>
-                <a type='button' title='Excluir' onclick='excluir_registro(this)' id='btn_excluir' style='color:red;' title='Excluir Campo' data-bs-dismiss='alert' >
-                <i class="bi bi-trash3-fill"></i>
-                </a>
+        <div class="row mx-auto p-2" style="justify-content: center;">
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control text-uppercase" required id="inputItem" placeholder="Item">
+                    <label for="inputItem">Item</label>
+                </div>
             </div>
-            </div>   
-          </div>
-        </div>`
+
+            <div class="col-md-2">
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" required id="inputQuantidade" placeholder="Quantidade">
+                    <label for="inputQuantidade">Quantidade</label>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" required id="inputValor" placeholder="Valor">
+                    <label for="inputValor">Valor</label>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <button class="btn btn-success btn-lg" id="btn_adiciona" type="button" onclick="main()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <!--CONTADOR DE QUANTIDADE DE ITENS-->
+        <div class="row" id="quantidade_total">
+            <!--EXIBIRÁ A QUANTIDADE TOTAL DE MERCADORIAS NO CARRINHO-->
+        </div>
+
+        <!--VALOR TOTAL DA COMPRA-->
+        <div class="row" id="valor_total">
+            <!--EXIBIRÁ O VALOR TOTAL DA COMPRA-->
+        </div>
+
+        <!--RECEBE OS INPUTS-->
+        <div class="row" id="linhas">
+            <!--RECEBE OS INPUTS COM OS DADOS DA MERCADORIA-->
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        var contador = 0;
+        // CRIA LINHA
+        function criaLinha(counter) {
+
+            linha = document.createElement("div");
+            item = document.createElement("a");
+            const nome_mercadoria = $("#inputItem").val();
+            const quantidade_mercadoria = $("#inputQuantidade").val();
+            const valor_mercadoria = $("#inputValor").val();
+
+            item.innerHTML = `<div class='alert input-group mb-3 alert-dismissible fade show linha_${counter}' ondblclick='marcar_compra(${counter})' id='dados' role='alert'>\
+                        <div class="form-floating mb-3">\
+                            <input type="text" readonly name='item_${counter}' value='${nome_mercadoria}' style='text-transform: uppercase;' class="form-control" id="item_${counter}" placeholder="ITEM">\
+                            <label for="item_${counter}">ITEM</label>\
+                        </div>\
+                        <div class="form-floating mb-3">\
+                            <input type="text" readonly name='qtd_${counter}' id='num_${counter}' value='${quantidade_mercadoria}' style='text-transform: uppercase;' class="form-control" placeholder="QUANTIDADE">\
+                            <label for="num_${counter}">QUANTIDADE</label>\
+                        </div>\
+                        <div class="form-floating mb-3 input-group">\
+                            <input type="text" readonly name='valor${counter}' id='valor_${counter}' value='${valor_mercadoria}' style='text-transform: uppercase;' class="form-control" placeholder="VALOR R$">\
+                            <button type='button' title='Excluir' onclick='subtrair_itens(${counter})' ' id='btn_subtrai' class='btn btn-danger' title='Excluir Campo' data-bs-dismiss='alert' ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                            </svg></button>\
+                            <label for="valor_${counter}">VALOR R$</label>\
+                        </div>\
+                        
+                        </div>`;
 
 
-      linha.appendChild(item);
+            linha.appendChild(item);
 
-      return linha;
-    }
+            return linha;
+        }
 
-    //FUNÇÃO PARA RISCAR O ITEM
-    $(document).on('click', 'h6', function () {
-      $(this).toggleClass('strike');
-    });
+        function main() {
 
-    //FUNÇÃO PARA INSERIR OS ITENS A LISTA
-    function main() {
+            let linhas = document.getElementById("linhas");
+            let linha = criaLinha(contador);
+            const nome_mercadoria = $("#inputItem").val();
 
-      let linhas = document.getElementById("linhas");
-      let linha = criaLinha(contador);
+            if (nome_mercadoria == "") {
+                alert('PREENCHA O CAMPO');
+            } else {
+                linhas.appendChild(linha);
+                contador++;
+                somar_itens();
+                somar_valor_compras();
+            }
 
-      if (item.value == "") {
-        alert('PREENCHA O CAMPO');
-      } else {
-        linhas.appendChild(linha);
-        contador++;
-        $("#item").val("");
-        soma_itens();
-      }
+            $("#inputItem").val(" ");
+            $("#inputQuantidade").val(" ");
+            $("#inputValor").val(" ");
 
-    }
+        }
+
+        //ADICIONA INPUT PRESSIONANDO A TECLA ENTER
+        $("#inputItem, #inputQuantidade, #inputValor").keypress(function (event) {
+            if (event.keyCode === 13) {
+                $("#btn_adiciona").click();
+                $("#inputItem").val(" ");
+                $("#inputQuantidade").val(" ");
+                $("#inputValor").val(" ");
+            }
+        });
+
+        var itens = 0;
+        var conta_item = 0;
+        function somar_itens() {
+            var quantidade_itens = $('#inputQuantidade').val();
+            itens += parseInt(quantidade_itens);
+
+            $('#quantidade_total').html(`<h3 class="text-center" value='${itens}' id='quantidadeTotal'>Quantidade total de itens no carrinho: ${itens} <i class="bi bi-cart4"></i></h3>`);
+            conta_item++;
+        }
+
+        var valor_compra = 0;
+        var conta_compras = 0;
+        function somar_valor_compras() {
+            var valor = $('#inputValor').val();
+            valor_compra += parseFloat(valor);
+
+            $('#valor_total').html(`<h3 id="valortotal" class="text-center">Valor total da compra: R$ ${parseFloat(valor_compra).toFixed(2)}</h3>`);
+            conta_compras++;
+        }
 
 
 
-    //ADICIONA INPUT PRESSIONANDO A TECLA ENTER
-    $("#item").keypress(function (event) {
-      if (event.keyCode === 13) {
-        $("#btn_adiciona").click();
-      }
-    });
+        function subtrair_itens(id) {
+            const quantidade = $(`#num_${id}`).val();
+            itens -= quantidade;
+            $('#quantidade_total').html(`<h3 class="text-center" ' id='quantidadeTotal'>Quantidade total de itens no carrinho: ${itens} <i class="bi bi-cart4"></i></h3>`);
+            subtrair_valor_compra(id);
+        }
 
 
+        function subtrair_valor_compra(id) {
+            const valor = $(`#valor_${id}`).val();
+            valor_compra -= valor;
+            $('#valor_total').html(`<h3 id="valortotal" class="text-center">Valor total da compra: R$ ${parseFloat(valor_compra).toFixed(2)}</h3>`);
+        }
 
-    //SOMA A QUANTIDADE DE ITENS
+        function marcar_compra(id) {
+            $(`.linha_${id}`).css({ 'text-decoration': 'line-through', 'color': 'red' });
+            $(`.linha_${id}`).find('input').css({ 'background-color': 'gray', 'color': 'white' });
+            $(`.linha_${id}`).find('span').css({ 'background-color': 'gray', 'color': 'white' });
 
-    function soma_itens() {
-      var qtd_div = $("#linhas div a .bordas");
-      var total = qtd_div.length;
-
-      console.log("Quantidade atualizada de itens: " + total);
-      document.getElementById("quantidade_total").innerHTML = `<h3 class="text-center" value='${total}' id='quantidadeTotal'>Quantidade total de itens: ${total} </h3>`;
-
-    }
+        }
 
 
-    //SUBTRAI A QUANTIDADE DE PROTOCOLOS
-    function excluir_registro() {
-      var qtd_div = $("#linhas div a .bordas");
-      var total = qtd_div.length - 1;
-      console.log("Quantidade atualizada de itens: " + total);
-      document.getElementById("quantidade_total").innerHTML = `<h3 class="text-center" value='${total}' id='quantidadeTotal'>Quantidade total de itens: ${total} </h3>`;
-
-    }
-   
-
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    </script>
 </body>
-
-
-<!--
-
-
-
-    DEVELOPED BY DIEGO SARMANHO (2023)
-
-  -->
 
 </html>

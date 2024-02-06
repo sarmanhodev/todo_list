@@ -16,46 +16,52 @@
     <div class="container-fluid">
 
         <div class="row m-3 text-center">
-            <h2>Lista de Compras</h2>
+            <h1 class="fw-bold text-decoration-underline" style="color: #faa307;">Lista de Compras</h1>
         </div>
-        <form >
-        <div class="row mx-auto p-2">
-            
+        <form>
+            <div class="row mx-auto p-2">
+
                 <div class="col-md-3">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control text-uppercase" required id="inputItem" placeholder="Item">
+                        <input type="text" class="form-control text-uppercase" required id="inputItem"
+                            placeholder="Item">
                         <label for="inputItem">Item</label>
                     </div>
                 </div>
-    
+
                 <div class="col-md-2">
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" onchange="atualizar_valor()"  onkeyup="atualizar_valor()" required id="inputQuantidade" placeholder="Quantidade">
+                        <input type="number" class="form-control" onchange="atualizar_valor()"
+                            onkeyup="atualizar_valor()" required id="inputQuantidade" placeholder="Quantidade">
                         <label for="inputQuantidade">Quantidade</label>
                     </div>
                 </div>
-    
+
                 <div class="col-md-2">
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" onkeyup="atualizar_valor()" required id="inputValor" placeholder="Valor">
+                        <input type="number" class="form-control" onkeyup="atualizar_valor()" required id="inputValor"
+                            placeholder="Valor">
                         <label for="inputValor">Valor</label>
                     </div>
                 </div>
-    
+
                 <div class="col-md-2">
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" readonly id="inputValorAtualizado" placeholder="Valor Atualizado">
+                        <input type="number" class="form-control" readonly id="inputValorAtualizado"
+                            placeholder="Valor Atualizado">
                         <label for="inputValorAtualizado">Valor Atualizado</label>
                     </div>
                 </div>
-    
+
                 <div class="col-md-2">
-                    <button class="btn btn-success btn-lg" id="btn_adiciona" type="button" onclick="main()"><i class="bi bi-check-square"></i></button>
-                    <button class="btn btn-danger btn-lg" type="reset" ><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-success btn-lg" id="btn_adiciona" type="button" onclick="main()"><i
+                            class="bi bi-check-square"></i></button>
+                    <button class="btn btn-danger btn-lg" id="btn_reset" type="reset"><i
+                            class="bi bi-trash"></i></button>
                 </div>
-            
-        </div>
-    </form>
+
+            </div>
+        </form>
     </div>
 
     <div class="container-fluid">
@@ -83,7 +89,32 @@
             font-family: 'Lucida Sans', Arial, sans-serif;
         }
 
-        
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            height: 100vh;
+            background-image: url('https://wallpapercave.com/wp/wp1897936.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .glasscontainer {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;           
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #btn_adiciona,
+        #btn_reset {
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        }
     </style>
 
     <script>
@@ -161,7 +192,7 @@
             var quantidade_itens = $('#inputQuantidade').val();
             itens += parseInt(quantidade_itens);
 
-            $('#quantidade_total').html(`<h3 class="text-center" value='${itens}' id='quantidadeTotal'>Quantidade total de itens no carrinho: ${itens} <i class="bi bi-cart4"></i></h3>`);
+            $('#quantidade_total').html(`<h3 class="text-center glasscontainer" style="color: black;" id='quantidadeTotal'>Quantidade total de itens no carrinho: ${itens} <i class="bi bi-cart4"></i></h3>`);
             conta_item++;
         }
 
@@ -171,7 +202,7 @@
             var valor = $('#inputValorAtualizado').val();
             valor_compra += parseFloat(valor);
 
-            $('#valor_total').html(`<h3 id="valortotal" class="text-center">Valor total da compra: R$ ${parseFloat(valor_compra).toFixed(2)}</h3>`);
+            $('#valor_total').html(`<h3 id="valortotal" style="color: black;" class="text-center glasscontainer">Valor total da compra: R$ ${parseFloat(valor_compra).toFixed(2)}</h3>`);
             conta_compras++;
         }
 
@@ -180,7 +211,7 @@
         function subtrair_itens(id) {
             const quantidade = $(`#num_${id}`).val();
             itens -= quantidade;
-            $('#quantidade_total').html(`<h3 class="text-center" ' id='quantidadeTotal'>Quantidade total de itens no carrinho: ${itens} <i class="bi bi-cart4"></i></h3>`);
+            $('#quantidade_total').html(`<h3 class="text-center glasscontainer" style="color: black;" id='quantidadeTotal'>Quantidade total de itens no carrinho: ${itens} <i class="bi bi-cart4"></i></h3>`);
             subtrair_valor_compra(id);
         }
 
@@ -188,7 +219,7 @@
         function subtrair_valor_compra(id) {
             const valor = $(`#valor_${id}`).val();
             valor_compra -= valor;
-            $('#valor_total').html(`<h3 id="valortotal" class="text-center">Valor total da compra: R$ ${parseFloat(valor_compra).toFixed(2)}</h3>`);
+            $('#valor_total').html(`<h3 id="valortotal" style="color: black;" class="text-center glasscontainer">Valor total da compra: R$ ${parseFloat(valor_compra).toFixed(2)}</h3>`);
         }
 
         function marcar_compra(id) {
@@ -198,10 +229,10 @@
 
         }
 
-        function atualizar_valor(){
+        function atualizar_valor() {
             const quantidade = $('#inputQuantidade').val();
             const valor = $('#inputValor').val();
-            const valor_atualizado = valor*quantidade;
+            const valor_atualizado = valor * quantidade;
 
             $('#inputValorAtualizado').val(parseFloat(valor_atualizado.toFixed(2)));
         }

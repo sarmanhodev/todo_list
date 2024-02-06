@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="utf-8">
@@ -18,33 +18,44 @@
         <div class="row m-3 text-center">
             <h2>Lista de Compras</h2>
         </div>
-
+        <form >
         <div class="row mx-auto p-2">
-            <div class="col-md-3">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control text-uppercase" required id="inputItem" placeholder="Item">
-                    <label for="inputItem">Item</label>
+            
+                <div class="col-md-3">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control text-uppercase" required id="inputItem" placeholder="Item">
+                        <label for="inputItem">Item</label>
+                    </div>
                 </div>
-            </div>
-
-            <div class="col-md-2">
-                <div class="form-floating mb-3">
-                    <input type="number" class="form-control" required id="inputQuantidade" placeholder="Quantidade">
-                    <label for="inputQuantidade">Quantidade</label>
+    
+                <div class="col-md-2">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" onchange="atualizar_valor()"  onkeyup="atualizar_valor()" required id="inputQuantidade" placeholder="Quantidade">
+                        <label for="inputQuantidade">Quantidade</label>
+                    </div>
                 </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="form-floating mb-3">
-                    <input type="number" class="form-control" required id="inputValor" placeholder="Valor">
-                    <label for="inputValor">Valor</label>
+    
+                <div class="col-md-2">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" onkeyup="atualizar_valor()" required id="inputValor" placeholder="Valor">
+                        <label for="inputValor">Valor</label>
+                    </div>
                 </div>
-            </div>
-
-            <div class="col-md-3">
-                <button class="btn btn-success btn-lg" id="btn_adiciona" type="button" onclick="main()">Salvar</button>
-            </div>
+    
+                <div class="col-md-2">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" readonly id="inputValorAtualizado" placeholder="Valor Atualizado">
+                        <label for="inputValorAtualizado">Valor Atualizado</label>
+                    </div>
+                </div>
+    
+                <div class="col-md-2">
+                    <button class="btn btn-success btn-lg" id="btn_adiciona" type="button" onclick="main()"><i class="bi bi-check-square"></i></button>
+                    <button class="btn btn-danger btn-lg" type="reset" ><i class="bi bi-trash"></i></button>
+                </div>
+            
         </div>
+    </form>
     </div>
 
     <div class="container-fluid">
@@ -84,7 +95,7 @@
             item = document.createElement("a");
             const nome_mercadoria = $("#inputItem").val();
             const quantidade_mercadoria = $("#inputQuantidade").val();
-            const valor_mercadoria = $("#inputValor").val();
+            const valor_mercadoria = $("#inputValorAtualizado").val();
 
             item.innerHTML = `<div class='alert input-group mb-3 alert-dismissible fade show linha_${counter}' ondblclick='marcar_compra(${counter})' id='dados' role='alert'>\
                         <div class="form-floating mb-3">\
@@ -157,7 +168,7 @@
         var valor_compra = 0;
         var conta_compras = 0;
         function somar_valor_compras() {
-            var valor = $('#inputValor').val();
+            var valor = $('#inputValorAtualizado').val();
             valor_compra += parseFloat(valor);
 
             $('#valor_total').html(`<h3 id="valortotal" class="text-center">Valor total da compra: R$ ${parseFloat(valor_compra).toFixed(2)}</h3>`);
@@ -185,6 +196,14 @@
             $(`.linha_${id}`).find('input').css({ 'background-color': 'gray', 'color': 'white' });
             $(`.linha_${id}`).find('span').css({ 'background-color': 'gray', 'color': 'white' });
 
+        }
+
+        function atualizar_valor(){
+            const quantidade = $('#inputQuantidade').val();
+            const valor = $('#inputValor').val();
+            const valor_atualizado = valor*quantidade;
+
+            $('#inputValorAtualizado').val(parseFloat(valor_atualizado.toFixed(2)));
         }
 
 
